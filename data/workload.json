@@ -1,0 +1,7 @@
+{
+  "seed": 113,
+  "batch": 1024,
+  "components": 8,
+  "channels": 24,
+  "max_workspace_bytes": 25165824
+}

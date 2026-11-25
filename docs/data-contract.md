@@ -1,0 +1,5 @@
+# 混合高斯头数据
+每条记录由 record_id 唯一标识，measurements 是按 channel_id 的当前真实测量，provenance 取 measured 或 predicted，只有 measured 参与似然或现场条件。revision 替换同记录的事实，retract 指定的测量身份后不再有效。一次完整训练窗口只对唯一记录按正 sample_weight 计权，窗口依赖的事实变化时整窗口拒绝提交；已提交步数保持历史解释。资料的 predicted 条目只用于展示，不能升格为 measured。
+每条原始头含 logits:[K]、mean:[K,D]、raw_lower:[K,D,D]。仅下三角参与，L 的严格下三角等于原值，对角为 softplus(raw)+1e-4，Cov=L@L.T，不预先规定求密度或微分的实现。softplus 是数学 log(1+exp(x)) 的稳定等价表达。对观测集合 O，目标是 -log(sum_k softmax(logits)[k]*Normal(y_O;mu_k[O],Cov_k[O,O]))。损失按有效记录 sample_weight 总和归一化，O 空集不参与。上三角原始参数梯度为零。梯度回到 logits、mean、raw_lower，对测量值本身不求导。
+查询给出 measured_known、requested_channels、source_allowlist、max_variance、allowed_intervals 和 condition_limit。每分量需按联合高斯的数学条件分布解释，混合权重按已知通道的似然更新；总协方差应包含分量内与分量均值差异。判断方仅在所有非已知查询通道均满足条件数限、各自总方差限、总均值落在给定闭区间内且已知测量来源受允许时交付为 usable；无真实已知通道仅为 display_only，已知查询通道返回真实数值与零条件方差。数值失败为 unavailable，不隐式加未声明噪声修补分布。
+支持 batch<=1024、K<=8、D<=24。输入 float32，内部可用 float64；似然 atol=2e-4、rtol=5e-4，梯度 atol=5e-4、rtol=2e-3，条件结果 atol=1e-5、rtol=3e-4。额外数值工作区上限24 MiB，不含输入头、测量、最终梯度/预测；不得为每种缺失模式保存所有批次的完整重复因子。

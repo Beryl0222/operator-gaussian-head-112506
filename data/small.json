@@ -1,0 +1,193 @@
+{
+  "product": "缺测通道下的混合高斯头与条件预测交付",
+  "nature": "合成演练资料，不包含真实人员、设备或训练数据",
+  "objects": {
+    "records": [
+      {
+        "record_id": "contact-0",
+        "revision": 1,
+        "weight": 1,
+        "measurements": [
+          {
+            "channel_id": 0,
+            "value": 0.2,
+            "provenance": "measured",
+            "source": "probe-a"
+          },
+          {
+            "channel_id": 1,
+            "value": 0.4,
+            "provenance": "predicted",
+            "source": "predictor"
+          }
+        ]
+      },
+      {
+        "record_id": "contact-1",
+        "revision": 1,
+        "weight": 2,
+        "measurements": [
+          {
+            "channel_id": 0,
+            "value": -0.1,
+            "provenance": "measured",
+            "source": "probe-b"
+          },
+          {
+            "channel_id": 1,
+            "value": 0.3,
+            "provenance": "measured",
+            "source": "probe-b"
+          }
+        ]
+      },
+      {
+        "record_id": "contact-2",
+        "revision": 1,
+        "weight": 1,
+        "measurements": []
+      }
+    ],
+    "query": {
+      "record_id": "contact-0",
+      "requested_channels": [
+        0,
+        1
+      ],
+      "source_allowlist": [
+        "probe-a"
+      ],
+      "max_variance": [
+        1,
+        1
+      ],
+      "allowed_intervals": [
+        [
+          -2,
+          2
+        ],
+        [
+          -2,
+          2
+        ]
+      ],
+      "condition_limit": 10000
+    }
+  },
+  "tensors": {
+    "logits": [
+      [
+        0.1,
+        -0.2
+      ],
+      [
+        0.1,
+        -0.2
+      ],
+      [
+        0.1,
+        -0.2
+      ]
+    ],
+    "mean": [
+      [
+        [
+          0.1,
+          0.3
+        ],
+        [
+          -0.2,
+          0.5
+        ]
+      ],
+      [
+        [
+          0.1,
+          0.3
+        ],
+        [
+          -0.2,
+          0.5
+        ]
+      ],
+      [
+        [
+          0.1,
+          0.3
+        ],
+        [
+          -0.2,
+          0.5
+        ]
+      ]
+    ],
+    "raw_lower": [
+      [
+        [
+          [
+            0.1,
+            0
+          ],
+          [
+            0.2,
+            0.3
+          ]
+        ],
+        [
+          [
+            0.2,
+            0
+          ],
+          [
+            -0.1,
+            0.4
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            0.1,
+            0
+          ],
+          [
+            0.2,
+            0.3
+          ]
+        ],
+        [
+          [
+            0.2,
+            0
+          ],
+          [
+            -0.1,
+            0.4
+          ]
+        ]
+      ],
+      [
+        [
+          [
+            0.1,
+            0
+          ],
+          [
+            0.2,
+            0.3
+          ]
+        ],
+        [
+          [
+            0.2,
+            0
+          ],
+          [
+            -0.1,
+            0.4
+          ]
+        ]
+      ]
+    ]
+  }
+}
